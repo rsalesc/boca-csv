@@ -18,25 +18,26 @@ CSV.open("users.csv", "wb") do |csv|
     table.slice!(0)
 
     f.puts "[user]"
+    @name = 1
+    @tag = 5
 
     i = 1
     table.each do |row|
       login = "time#{i}"
       pass = get_rand(5, 3)
-      i += 1
 
-      row[1] = cap(row[1])
-      row[2].capitalize!
+      row[@name] = cap(row[@name]).strip
+      row[@tag] = row[@tag].upcase.strip
 
       # csv
-      out = [row[1], row[2], login, pass]
+      out = [row[@name], row[@tag], login, pass]
       csv << out
 
       # users.txt
       f.puts "usernumber=#{$OFF+i}"
       f.puts "usersitenumber=1"
       f.puts "username=#{login}"
-      f.puts "userfullname=[#{row[2]}] #{row[1]}"
+      f.puts "userfullname=[#{row[@tag]}] #{row[@name]}"
       f.puts "userenabled=t"
       f.puts "usermultilogin=t"
       f.puts "userpassword=#{pass}"
@@ -44,6 +45,7 @@ CSV.open("users.csv", "wb") do |csv|
 
       # dump
       p out
+      i += 1
     end
   }
 end
